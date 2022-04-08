@@ -1,4 +1,4 @@
-package com.sadatmalik.blockchain;
+package com.sadatmalik.blockchain.model;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

@@ -1,4 +1,4 @@
-package com.sadatmalik.blockchain;
+package com.sadatmalik.blockchain.model;
 
 /**
  * Models a block in the blockchain.
