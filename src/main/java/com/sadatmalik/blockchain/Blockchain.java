@@ -54,4 +54,8 @@ public class Blockchain {
         }
         return newProof;
     }
+
+    private String hash(Block block) {
+        return DigestUtils.sha256Hex(block.toString());
+    }
 }

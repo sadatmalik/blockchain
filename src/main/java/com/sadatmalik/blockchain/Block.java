@@ -17,4 +17,14 @@ public class Block {
         this.proof = proof;
         this.previousHash = previousHash;
     }
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "index=" + index +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", proof='" + proof + '\'' +
+                ", previousHash='" + previousHash + '\'' +
+                '}';
+    }
 }
