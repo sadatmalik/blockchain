@@ -35,7 +35,7 @@ public class Blockchain {
     }
 
     public Block getPreviousBlock() {
-        return chain.get(chain.size()-2);
+        return chain.get(chain.size()-1);
     }
 
     public long proofOfWork(long prevProof) {
@@ -55,7 +55,7 @@ public class Blockchain {
         return newProof;
     }
 
-    private String hash(Block block) {
+    public String hash(Block block) {
         return DigestUtils.sha256Hex(block.toString());
     }
 

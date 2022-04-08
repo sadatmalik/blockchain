@@ -1,10 +1,13 @@
 package com.sadatmalik.blockchain.model;
 
+import lombok.Getter;
+
 /**
  * Models a block in the blockchain.
  *
  * @author sm@creativefusion.net
  */
+@Getter
 public class Block {
     Long index;
     String timeStamp;
