@@ -16,7 +16,7 @@ public class Blockchain {
 
     List<Block> chain;
 
-    Blockchain() {
+    public Blockchain() {
         chain = new ArrayList<>();
         Block genesis = createBlock(1L, "0");
     }
