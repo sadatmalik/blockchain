@@ -1,5 +1,7 @@
 package com.sadatmalik.blockchain;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,5 +32,26 @@ public class Blockchain {
 
         chain.add(block);
         return block;
+    }
+
+    public Block getPreviousBlock() {
+        return chain.get(chain.size()-2);
+    }
+
+    public long proofOfWork(long prevProof) {
+        long newProof = 1;
+        boolean checkProof = false;
+
+        while (!checkProof) {
+            String hashOperation =
+                    DigestUtils.sha256Hex(String.valueOf(
+                            Math.pow(newProof,2) - Math.pow(prevProof,2)));
+            if (hashOperation.startsWith("0000")) {
+                checkProof = true;
+            } else {
+                newProof++;
+            }
+        }
+        return newProof;
     }
 }
