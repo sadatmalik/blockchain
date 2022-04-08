@@ -1,5 +1,6 @@
 package com.sadatmalik.blockchain.model;
 
+import lombok.Getter;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDateTime;
@@ -12,13 +13,14 @@ import java.util.List;
  *
  * @author sm@creativefusion.net
  */
+@Getter
 public class Blockchain {
 
     List<Block> chain;
 
     public Blockchain() {
         chain = new ArrayList<>();
-        Block genesis = createBlock(1L, "0");
+        createBlock(1L, "0"); //genesis block
     }
 
     public Block createBlock(long proof, String previousHash) {
@@ -59,7 +61,7 @@ public class Blockchain {
         return DigestUtils.sha256Hex(block.toString());
     }
 
-    private boolean isChainValid() {
+    public boolean isChainValid() {
         Block previousBlock = chain.get(0);
         long blockIndex = 1;
 
