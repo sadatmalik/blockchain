@@ -18,10 +18,10 @@ public class Blockchain {
 
     Blockchain() {
         chain = new ArrayList<>();
-        Block genesis = createBlock("1", "0");
+        Block genesis = createBlock(1L, "0");
     }
 
-    public Block createBlock(String proof, String previousHash) {
+    public Block createBlock(long proof, String previousHash) {
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String timeStamp = dateTime.format(formatter);
@@ -57,5 +57,29 @@ public class Blockchain {
 
     private String hash(Block block) {
         return DigestUtils.sha256Hex(block.toString());
+    }
+
+    private boolean isChainValid() {
+        Block previousBlock = chain.get(0);
+        long blockIndex = 1;
+
+        while (blockIndex < chain.size()) {
+            Block block = chain.get((int)blockIndex);
+            if (!block.previousHash.equals(
+                    hash(previousBlock))) {
+                return false;
+            }
+            long prevProof = previousBlock.proof;
+            long proof = block.proof;
+            String hashOperation =
+                    DigestUtils.sha256Hex(String.valueOf(
+                            Math.pow(proof,2) - Math.pow(prevProof,2)));
+            if (!hashOperation.startsWith("0000")) {
+                return false;
+            }
+            previousBlock = block;
+            blockIndex++;
+        }
+        return true;
     }
 }

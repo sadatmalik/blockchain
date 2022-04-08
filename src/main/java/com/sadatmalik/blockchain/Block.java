@@ -6,11 +6,10 @@ package com.sadatmalik.blockchain;
 public class Block {
     Long index;
     String timeStamp;
-    String proof;
+    long proof;
     String previousHash;
 
-
-    Block(long index, String timeStamp, String proof,
+    Block(long index, String timeStamp, long proof,
           String previousHash) {
         this.index = index;
         this.timeStamp = timeStamp;
