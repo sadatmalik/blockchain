@@ -1,6 +1,8 @@
 package com.sadatmalik.blockchain;
 
 /**
+ * Models a block in the blockchain.
+ *
  * @author sm@creativefusion.net
  */
 public class Block {
