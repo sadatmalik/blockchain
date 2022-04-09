@@ -18,6 +18,9 @@ public class Blockchain {
 
     List<Block> chain;
 
+    /**
+     * Initializes the chain and creates the genesis block.
+     */
     public Blockchain() {
         chain = new ArrayList<>();
         createBlock(1L, "0"); //genesis block
