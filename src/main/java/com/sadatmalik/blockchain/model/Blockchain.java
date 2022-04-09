@@ -26,6 +26,17 @@ public class Blockchain {
         createBlock(1L, "0"); //genesis block
     }
 
+    /**
+     * Creates a new block with index equal to current size of chain plus one, the current
+     * date and time, the "proof" of work from mining the previous block, and the hash of the
+     * previous block.
+     *
+     * Adds the created block to the chain.
+     *
+     * @param proof
+     * @param previousHash
+     * @return
+     */
     public Block createBlock(long proof, String previousHash) {
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
