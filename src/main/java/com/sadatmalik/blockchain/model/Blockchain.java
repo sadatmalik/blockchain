@@ -50,6 +50,12 @@ public class Blockchain {
         return block;
     }
 
+    /**
+     * Returns the last inserted block - the block currently at the end of the
+     * chain. Could be named getLastBlock().
+     *
+     * @return last inserted block.
+     */
     public Block getPreviousBlock() {
         return chain.get(chain.size()-1);
     }
