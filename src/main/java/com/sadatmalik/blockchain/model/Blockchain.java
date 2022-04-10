@@ -60,6 +60,17 @@ public class Blockchain {
         return chain.get(chain.size()-1);
     }
 
+
+    /**
+     * The proof of work algorithm for miners. Not too complicated but could easily
+     * be made more difficult - easiest way would be to simply add more leading zeroes
+     * to the final check. For now, simply hashes the difference between the squares of
+     * the proof and the previous proof with SHA256. Looking for a hash with 4 leading
+     * zeroes.
+     *
+     * @param prevProof the proof from the last block
+     * @return the proof for the new block
+     */
     public long proofOfWork(long prevProof) {
         long newProof = 1;
         boolean checkProof = false;
