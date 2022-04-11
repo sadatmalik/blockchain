@@ -88,6 +88,12 @@ public class Blockchain {
         return newProof;
     }
 
+    /**
+     * Returns the hash of the given block.
+     *
+     * @param block to calculate the hash for
+     * @return SHA256 hash
+     */
     public String hash(Block block) {
         return DigestUtils.sha256Hex(block.toString());
     }
