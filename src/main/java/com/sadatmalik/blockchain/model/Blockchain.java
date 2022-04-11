@@ -89,7 +89,8 @@ public class Blockchain {
     }
 
     /**
-     * Returns the hash of the given block.
+     * Returns the hash of the given block - hash the entire block, including the proof,
+     * previous hash, index and timestamp.
      *
      * @param block to calculate the hash for
      * @return SHA256 hash
@@ -98,6 +99,17 @@ public class Blockchain {
         return DigestUtils.sha256Hex(block.toString());
     }
 
+    /**
+     * Starting from beginning of the chain, checks the calculated hash of each previous
+     * block with the previous hash value stored in its next block.
+     *
+     * Likewise, rechecks the proof of work has not been tampered with - reapplying the
+     * difference of squares of proofs hash check.
+     *
+     * Returns false if either of the above conditions fail, otherwise true.
+     *
+     * @return chain validity true or false
+     */
     public boolean isChainValid() {
         Block previousBlock = chain.get(0);
         long blockIndex = 1;
