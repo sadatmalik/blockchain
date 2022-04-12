@@ -22,6 +22,11 @@ public class BlockchainController {
 
     private final Blockchain blockchain;
 
+    /**
+     * Mines the previous block to insert the new block with the required proof.
+     *
+     * @return newly inserted block
+     */
     @GetMapping("/mine-block")
     public ResponseEntity<Block> mineBlock() {
         long proof = blockchain.proofOfWork(
@@ -37,11 +42,21 @@ public class BlockchainController {
         return ResponseEntity.ok(block);
     }
 
+    /**
+     * Get the blockchain.
+     *
+     * @return the blockchain
+     */
     @GetMapping("/get-chain")
     public ResponseEntity<List<Block>> getChain() {
         return ResponseEntity.ok(blockchain.getChain());
     }
 
+    /**
+     * Validate the blockchain.
+     *
+     * @return true or false
+     */
     @GetMapping("/is-valid")
     public ResponseEntity<Boolean> isValid() {
         return ResponseEntity.ok(
