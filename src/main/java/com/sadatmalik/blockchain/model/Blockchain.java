@@ -1,5 +1,7 @@
 package com.sadatmalik.blockchain.model;
 
+import com.sadatmalik.blockchain.model.crypto.Transaction;
+import com.sadatmalik.blockchain.model.nodes.Node;
 import lombok.Getter;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -7,9 +9,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
- * Creates a blockchain
+ * Creates a blockchain.
+ *
+ * The inclusion of transactions sets up the blockchain for cryptocurrency.
  *
  * @author sm@creativefusion.net
  */
@@ -17,12 +22,15 @@ import java.util.List;
 public class Blockchain {
 
     List<Block> chain;
+    List<Transaction> transacations;
+    Set<Node> nodes;
 
     /**
      * Initializes the chain and creates the genesis block.
      */
     public Blockchain() {
         chain = new ArrayList<>();
+        transacations = new ArrayList<>();
         createBlock(1L, "0"); //genesis block
     }
 
@@ -31,7 +39,8 @@ public class Blockchain {
      * date and time, the "proof" of work from mining the previous block, and the hash of the
      * previous block.
      *
-     * Adds the created block to the chain.
+     * Adds the created block to the chain. And then clears the transactions list, ready for the
+     * next mined block.
      *
      * @param proof
      * @param previousHash
@@ -44,7 +53,10 @@ public class Blockchain {
 
         Block block = new Block(
                 chain.size()+1,
-                timeStamp, proof, previousHash);
+                timeStamp, proof, previousHash,
+                transacations);
+
+        transacations = new ArrayList<>();
 
         chain.add(block);
         return block;
@@ -132,5 +144,27 @@ public class Blockchain {
             blockIndex++;
         }
         return true;
+    }
+
+    /**
+     * Adds the transaction to the current transaction list, and returns the index of
+     * the block into which the transactions will be inserted - i.e. the next mined
+     * block.
+     *
+     * @param transaction the transaction to insert.
+     * @return the index of the next block - into which the transaction will be inserted.
+     */
+    public long addTransaction(Transaction transaction) {
+        transacations.add(transaction);
+        return getPreviousBlock().index + 1;
+    }
+
+    /**
+     * Creates a new node for the given network URL and adds it to the set of known nodes.
+     *
+     * @param url the node url.
+     */
+    public void addNode(String url) {
+        nodes.add(new Node(url));
     }
 }

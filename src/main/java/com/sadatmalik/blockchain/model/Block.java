@@ -1,6 +1,9 @@
 package com.sadatmalik.blockchain.model;
 
+import com.sadatmalik.blockchain.model.crypto.Transaction;
 import lombok.Getter;
+
+import java.util.List;
 
 /**
  * Models a block in the blockchain. Encapsulate index, timeStamp, proof, and
@@ -14,6 +17,7 @@ public class Block {
     String timeStamp;
     long proof;
     String previousHash;
+    List<Transaction> transactions;
 
     /**
      * All args constructor.
@@ -24,11 +28,12 @@ public class Block {
      * @param previousHash previous block's hash
      */
     Block(long index, String timeStamp, long proof,
-          String previousHash) {
+          String previousHash, List<Transaction> transactions) {
         this.index = index;
         this.timeStamp = timeStamp;
         this.proof = proof;
         this.previousHash = previousHash;
+        this.transactions = transactions;
     }
 
     @Override
