@@ -79,7 +79,7 @@ public class BlockchainController {
     }
 
     /**
-     * Adds the transaction body to the block chain. Returning the index of the block
+     * Adds the transaction body to the blockchain. Returning the index of the block
      * the transaction is being added to.
      *
      * @param transaction http request body.
