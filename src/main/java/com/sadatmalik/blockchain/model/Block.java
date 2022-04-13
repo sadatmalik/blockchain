@@ -2,6 +2,7 @@ package com.sadatmalik.blockchain.model;
 
 import com.sadatmalik.blockchain.model.crypto.Transaction;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @author sm@creativefusion.net
  */
 @Getter
+@Setter
 public class Block {
     Long index;
     String timeStamp;
