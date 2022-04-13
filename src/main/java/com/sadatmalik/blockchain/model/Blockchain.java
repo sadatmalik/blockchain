@@ -51,9 +51,9 @@ public class Blockchain {
      * Adds the created block to the chain. And then clears the transactions list, ready for the
      * next mined block.
      *
-     * @param proof
-     * @param previousHash
-     * @return
+     * @param proof the proof of work.
+     * @param previousHash hash of the previous block.
+     * @return the new mined block.
      */
     public Block createBlock(long proof, String previousHash) {
         LocalDateTime dateTime = LocalDateTime.now();
@@ -84,10 +84,10 @@ public class Blockchain {
 
     /**
      * The proof of work algorithm for miners. Not too complicated but could easily
-     * be made more difficult - easiest way would be to simply add more leading zeroes
-     * to the final check. For now, simply hashes the difference between the squares of
-     * the proof and the previous proof with SHA256. Looking for a hash with 4 leading
-     * zeroes.
+     * be made more difficult - the easiest way would be to simply add more leading
+     * zeroes to the final check. For now, simply hashes the difference between the
+     * squares of the proof and the previous proof with SHA256. Looking for a hash with
+     * 4 leading zeroes.
      *
      * @param prevProof the proof from the last block
      * @return the proof for the new block
@@ -190,7 +190,8 @@ public class Blockchain {
         for (Node node : nodes) {
             ResponseEntity<BlockchainDto> response =
                     restTemplate.getForEntity(node.getUrl(), BlockchainDto.class);
-            if (response.getStatusCode().is2xxSuccessful()) {
+            if (response.getBody() != null &&
+                    response.getStatusCode().is2xxSuccessful()) {
                 int length = response.getBody().getSize();
                 List<Block> chain = response.getBody().getChain();
                 if (length > maxLength && isChainValid(chain)) {
