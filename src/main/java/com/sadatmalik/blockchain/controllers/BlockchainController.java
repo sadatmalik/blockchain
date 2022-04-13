@@ -2,13 +2,12 @@ package com.sadatmalik.blockchain.controllers;
 
 import com.sadatmalik.blockchain.model.Block;
 import com.sadatmalik.blockchain.model.Blockchain;
+import com.sadatmalik.blockchain.model.BlockchainDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Blockchain Rest controller.
@@ -32,7 +31,7 @@ public class BlockchainController {
         long proof = blockchain.proofOfWork(
                 blockchain.getPreviousBlock().getProof()
         );
-        String previousHash = blockchain.hash(
+        String previousHash = Blockchain.hash(
                 blockchain.getPreviousBlock()
         );
         Block block = blockchain.createBlock(proof, previousHash);
@@ -43,13 +42,15 @@ public class BlockchainController {
     }
 
     /**
-     * Get the blockchain.
+     * Get the blockchain. Constructs a Dto with the list of blocks and the chain size.
      *
-     * @return the blockchain
+     * @return the blockchain data transfer object.
      */
     @GetMapping("/get-chain")
-    public ResponseEntity<List<Block>> getChain() {
-        return ResponseEntity.ok(blockchain.getChain());
+    public ResponseEntity<BlockchainDto> getChain() {
+        BlockchainDto dto = new BlockchainDto(blockchain.getChain(),
+                blockchain.getChain().size());
+        return ResponseEntity.ok(dto);
     }
 
     /**
@@ -60,7 +61,7 @@ public class BlockchainController {
     @GetMapping("/is-valid")
     public ResponseEntity<Boolean> isValid() {
         return ResponseEntity.ok(
-                blockchain.isChainValid()
+                Blockchain.isChainValid(blockchain.getChain())
         );
     }
 }

@@ -4,6 +4,9 @@ import com.sadatmalik.blockchain.model.crypto.Transaction;
 import com.sadatmalik.blockchain.model.nodes.Node;
 import lombok.Getter;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +17,10 @@ import java.util.Set;
 /**
  * Creates a blockchain.
  *
- * The inclusion of transactions sets up the blockchain for cryptocurrency.
+ * The inclusion of transactions sets up the blockchain for cryptocurrency. And a set
+ * of nodes holds all the nodes in the blockchain distributed network.
+ *
+ * The restTemplate handles the p2p communications with the nodes in the network.
  *
  * @author sm@creativefusion.net
  */
@@ -22,15 +28,18 @@ import java.util.Set;
 public class Blockchain {
 
     List<Block> chain;
-    List<Transaction> transacations;
+    List<Transaction> transactions;
     Set<Node> nodes;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * Initializes the chain and creates the genesis block.
      */
     public Blockchain() {
         chain = new ArrayList<>();
-        transacations = new ArrayList<>();
+        transactions = new ArrayList<>();
         createBlock(1L, "0"); //genesis block
     }
 
@@ -54,9 +63,9 @@ public class Blockchain {
         Block block = new Block(
                 chain.size()+1,
                 timeStamp, proof, previousHash,
-                transacations);
+                transactions);
 
-        transacations = new ArrayList<>();
+        transactions = new ArrayList<>();
 
         chain.add(block);
         return block;
@@ -107,7 +116,7 @@ public class Blockchain {
      * @param block to calculate the hash for
      * @return SHA256 hash
      */
-    public String hash(Block block) {
+    public static String hash(Block block) {
         return DigestUtils.sha256Hex(block.toString());
     }
 
@@ -122,7 +131,7 @@ public class Blockchain {
      *
      * @return chain validity true or false
      */
-    public boolean isChainValid() {
+    public static boolean isChainValid(List<Block> chain) {
         Block previousBlock = chain.get(0);
         long blockIndex = 1;
 
@@ -155,7 +164,7 @@ public class Blockchain {
      * @return the index of the next block - into which the transaction will be inserted.
      */
     public long addTransaction(Transaction transaction) {
-        transacations.add(transaction);
+        transactions.add(transaction);
         return getPreviousBlock().index + 1;
     }
 
@@ -166,5 +175,34 @@ public class Blockchain {
      */
     public void addNode(String url) {
         nodes.add(new Node(url));
+    }
+
+    /**
+     * Iterates over every node in the p2p network. For each node, retrieves its chain via
+     * a Rest call. Checks the size of every chain in the network, if a longer chain is found,
+     * replaces own chain with the longest one found.
+     *
+     * @return true if our chain was replaced by a longer one, otherwise returns false.
+     */
+    public boolean replaceChain() {
+        List<Block> longestChain = null;
+        int maxLength = this.chain.size();
+        for (Node node : nodes) {
+            ResponseEntity<BlockchainDto> response =
+                    restTemplate.getForEntity(node.getUrl(), BlockchainDto.class);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                int length = response.getBody().getSize();
+                List<Block> chain = response.getBody().getChain();
+                if (length > maxLength && isChainValid(chain)) {
+                    maxLength = length;
+                    longestChain = chain;
+                }
+            }
+        }
+        if (longestChain != null) {
+            this.chain = longestChain;
+            return true;
+        }
+        return false;
     }
 }
