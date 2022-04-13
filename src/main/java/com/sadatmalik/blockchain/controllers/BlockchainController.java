@@ -3,6 +3,8 @@ package com.sadatmalik.blockchain.controllers;
 import com.sadatmalik.blockchain.model.Block;
 import com.sadatmalik.blockchain.model.Blockchain;
 import com.sadatmalik.blockchain.model.BlockchainDto;
+import com.sadatmalik.blockchain.model.crypto.Transaction;
+import com.sadatmalik.blockchain.model.nodes.Node;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class BlockchainController {
 
     private final Blockchain blockchain;
+    private final Node node;
 
     /**
      * Mines the previous block to insert the new block with the required proof.
+     *
+     * Adds a single transaction representing the mined coins returned to the miner.
      *
      * @return newly inserted block
      */
@@ -33,6 +38,9 @@ public class BlockchainController {
         );
         String previousHash = Blockchain.hash(
                 blockchain.getPreviousBlock()
+        );
+        blockchain.addTransaction(
+                new Transaction(node.getAddress(), "sadat", 1)
         );
         Block block = blockchain.createBlock(proof, previousHash);
 
