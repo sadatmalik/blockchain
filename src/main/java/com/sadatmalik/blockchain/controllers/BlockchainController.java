@@ -7,9 +7,14 @@ import com.sadatmalik.blockchain.model.crypto.Transaction;
 import com.sadatmalik.blockchain.model.nodes.Node;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * Blockchain Rest controller.
@@ -71,5 +76,20 @@ public class BlockchainController {
         return ResponseEntity.ok(
                 Blockchain.isChainValid(blockchain.getChain())
         );
+    }
+
+    /**
+     * Adds the transaction body to the block chain. Returning the index of the block
+     * the transaction is being added to.
+     *
+     * @param transaction http request body.
+     * @return http response with status created, including the block index.
+     */
+    @PostMapping("/add-transaction")
+    public ResponseEntity<String> addTransaction(
+            @RequestBody @Valid Transaction transaction) {
+        long blockIndex = blockchain.addTransaction(transaction);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Transaction will be added to block " + blockIndex);
     }
 }

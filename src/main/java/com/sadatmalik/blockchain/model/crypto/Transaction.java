@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * Defines a crypto transaction.
  *
@@ -13,9 +16,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Transaction {
+
+    @NotBlank
     String sender;
+
+    @NotBlank
     String receiver;
-    double amount;
+
+    @NotNull
+    Double amount;
 
     public Transaction(String sender, String receiver, double amount) {
         this.sender = sender;
