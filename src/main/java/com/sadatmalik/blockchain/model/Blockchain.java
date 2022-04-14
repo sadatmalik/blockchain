@@ -191,7 +191,8 @@ public class Blockchain {
         int maxLength = this.chain.size();
         for (Node node : nodes) {
             ResponseEntity<BlockchainDto> response =
-                    restTemplate.getForEntity(node.getUrl(), BlockchainDto.class);
+                    restTemplate.getForEntity(node.getUrl() + "/get-chain",
+                            BlockchainDto.class);
             if (response.getBody() != null &&
                     response.getStatusCode().is2xxSuccessful()) {
                 int length = response.getBody().getSize();
