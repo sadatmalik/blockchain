@@ -1,4 +1,4 @@
-package com.sadatmalik;
+package com.sadatmalik.blockchain;
 
 import com.sadatmalik.blockchain.model.Blockchain;
 import org.springframework.boot.SpringApplication;
