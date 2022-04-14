@@ -110,8 +110,8 @@ public class Blockchain {
     }
 
     /**
-     * Returns the hash of the given block - hash the entire block, including the proof,
-     * previous hash, index and timestamp.
+     * Returns the hash of the given block - hashes the entire block, including the proof,
+     * previous hash, index and timestamp. And the body - i.e. crypto transactions.
      *
      * @param block to calculate the hash for
      * @return SHA256 hash
