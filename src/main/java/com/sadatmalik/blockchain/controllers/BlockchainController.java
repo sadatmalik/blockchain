@@ -46,7 +46,7 @@ public class BlockchainController {
                 blockchain.getPreviousBlock()
         );
         blockchain.addTransaction(
-                new Transaction(node.getAddress(), "sadat", 1)
+                new Transaction(node.getAddress(), node.getMiner(), 1)
         );
         Block block = blockchain.createBlock(proof, previousHash);
 
@@ -120,4 +120,18 @@ public class BlockchainController {
                         "The blockchain now contains the following nodes: " +
                         blockchain.getNodes().toString());
     }
+
+    @GetMapping("/replace-chain")
+    public ResponseEntity<String> replaceChain() {
+        boolean isChainReplaced = blockchain.replaceChain();
+        String message;
+        if (isChainReplaced) {
+            message = "The nodes had different chains so the chain was replaced " +
+                    "by the longest one";
+        } else {
+            message = "All good. The chain is the largest one.";
+        }
+        return ResponseEntity.ok(message);
+    }
+
 }

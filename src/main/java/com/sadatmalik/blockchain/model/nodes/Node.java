@@ -24,6 +24,9 @@ public class Node {
     @JsonIgnore
     String address;
 
+    @JsonIgnore
+    String miner;
+
     public Node(String url) {
         this.url = url;
         this.address = UUID.randomUUID().toString()

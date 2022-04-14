@@ -20,9 +20,20 @@ public class NodeConfig {
     @Value("${server.port}")
     private String port;
 
+    @Value("${node.miner}")
+    private String miner;
+
+    /**
+     * Creates a new node with the url values from configuration properties.
+     * Sets the miner for this node - i.e. the recipient of mined coins.
+     *
+     * @return
+     */
     @Bean
     public Node node() {
-        return new Node(url + ":" + port);
+        Node node = new Node(url + ":" + port);
+        node.setMiner(miner);
+        return node;
     }
 
 }
