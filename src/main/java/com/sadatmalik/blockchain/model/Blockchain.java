@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,7 @@ public class Blockchain {
     public Blockchain() {
         chain = new ArrayList<>();
         transactions = new ArrayList<>();
+        nodes = new HashSet<>();
         createBlock(1L, "0"); //genesis block
     }
 

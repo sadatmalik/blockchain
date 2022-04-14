@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Blockchain Rest controller.
@@ -91,5 +92,32 @@ public class BlockchainController {
         long blockIndex = blockchain.addTransaction(transaction);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Transaction will be added to block " + blockIndex);
+    }
+
+    /**
+     * Receives a Json list of Nodes in the network and them all to the blockchain.
+     *
+     * @param nodes list of nodes in the network.
+     * @return status message.
+     */
+    @PostMapping("/connect-nodes")
+    public ResponseEntity<String> connectNodes(
+            @RequestBody @Valid List<Node> nodes) {
+
+        if (nodes == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("No node");
+        }
+
+        log.info("Adding nodes: " + nodes);
+
+        for (Node node : nodes) {
+            blockchain.addNode(node.getUrl());
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("All the nodes are now connected. " +
+                        "The blockchain now contains the following nodes: " +
+                        blockchain.getNodes().toString());
     }
 }
