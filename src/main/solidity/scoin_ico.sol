@@ -24,9 +24,15 @@ contract scoin_ico {
         _;
     }
 
+    // Getting the equity in Scoins of an investor
+    function equity_in_scoins(address investor) external constant returns (uint) {
+        return equity_scoins[investor];
+    }
 
     // Getting the equity in USD of an investor
-
+    function equity_in_usd(address investor) external constant returns (uint) {
+        return equity_usd[investor];
+    }
 
     function scoin_ico(){
 
