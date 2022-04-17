@@ -34,6 +34,15 @@ contract scoin_ico {
         return equity_usd[investor];
     }
 
+    // Buying Scoins
+    function buy_scoins(address investor, uint usd_invested) external
+    can_buy_scoins(usd_invested) {
+        uint scoins_bought = usd_invested * usd_to_scoins;
+        equity_scoins[investor] += scoins_bought;
+        equity_usd[investor] += equity_scoins[investor] / usd_to_scoins;
+        total_scoins_bought += scoins_bought;
+    }
+
     function scoin_ico(){
 
     }
