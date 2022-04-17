@@ -19,7 +19,7 @@ import java.util.Set;
  * Creates a blockchain.
  *
  * The inclusion of transactions sets up the blockchain for cryptocurrency. And a set
- * of nodes holds all the nodes in the blockchain distributed network.
+ * of nodes holds all the nodes in the blockchain distributed p2p network.
  *
  * The restTemplate handles the p2p communications with the nodes in the network.
  *
