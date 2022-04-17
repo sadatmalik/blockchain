@@ -14,6 +14,10 @@ contract scoin_ico {
     // The total number of scoins that have been bought by investors
     uint public total_scoins_bought = 0;
 
+    // Mapping from the investor address to the equity in Scoins and USD
+    mapping(address => uint) equity_scoins;
+    mapping(address => uint) equity_usd;
+
     function scoin_ico(){
 
     }
