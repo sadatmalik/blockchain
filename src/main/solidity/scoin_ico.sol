@@ -5,7 +5,14 @@ pragma solidity ^0.8.0;
 
 contract scoin_ico {
 
+    // The maximum number of S coins available for sale
+    uint public max_scoins = 1000000;
 
+    // The USD to Scoin conversion rate
+    uint public usd_to_scoins = 1000;
+
+    // The total number of scoins that have been bought by investors
+    uint public total_scoins_bought = 0;
 
     function scoin_ico(){
 
