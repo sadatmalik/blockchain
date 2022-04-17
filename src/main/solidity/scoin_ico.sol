@@ -18,6 +18,16 @@ contract scoin_ico {
     mapping(address => uint) equity_scoins;
     mapping(address => uint) equity_usd;
 
+    // Checking if an investor can by Scoins
+    modifier can_buy_scoins(uint usd_invested) {
+        require (usd_invested * usd_to_scoins + total_scoins_bought <= max_scoins);
+        _;
+    }
+
+
+    // Getting the equity in USD of an investor
+
+
     function scoin_ico(){
 
     }
