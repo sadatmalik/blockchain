@@ -17,4 +17,9 @@ servers:
     description: Badger node
   - url: http://localhost:8082
     description: Pal node
-paths: {}
+paths:
+  /v1/mine-block:
+    get:
+      responses:
+        '200':
+          description: Newly inserted block
