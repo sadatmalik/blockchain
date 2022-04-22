@@ -1,0 +1,13 @@
+openapi: 3.0.2
+info:
+  version: v1.0
+  title: S-Coin Blockchain API
+  description: Rest API for interacting with the S-Coin blockchain
+  contact:
+    name: Sadat Malik
+    url: http://creativefusion.net
+    email: sadat.malik@me.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+paths: {}
