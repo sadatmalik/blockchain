@@ -23,3 +23,32 @@ paths:
       responses:
         '200':
           description: Newly inserted block
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  index:
+                    type: integer
+                    example: 6
+                  timeStamp:
+                    type: string
+                    example: 22-04-2022 14:30:31
+                  proof:
+                    type: integer
+                    example: 104205
+                  previousHash:
+                    type: string
+                    example: 3c938755101a7b975808daf0b5c174f8c745a55497bd09732e6b19c5f313272e
+                  transactions:
+                    type: object
+                    properties:
+                      sender:
+                        type: string
+                        example: 2c320ba9dcec48a28b123d84ea819488
+                      receiver:
+                        type: string
+                        example: sadat
+                      amount:
+                        type: integer
+                        example: 1
