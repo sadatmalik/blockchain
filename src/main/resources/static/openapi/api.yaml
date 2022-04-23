@@ -52,3 +52,13 @@ paths:
                       amount:
                         type: integer
                         example: 1
+
+  /v1/get-chain:
+    get:
+      responses:
+        '200':
+          description: The block chain
+          content:
+            application/json:
+              schema:
+                type: object
