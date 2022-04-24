@@ -41,18 +41,19 @@ paths:
                     type: string
                     example: 3c938755101a7b975808daf0b5c174f8c745a55497bd09732e6b19c5f313272e
                   transactions:
-                    type: object
-                    properties:
-                      sender:
-                        type: string
-                        example: 2c320ba9dcec48a28b123d84ea819488
-                      receiver:
-                        type: string
-                        example: sadat
-                      amount:
-                        type: integer
-                        example: 1
-
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sender:
+                          type: string
+                          example: 2c320ba9dcec48a28b123d84ea819488
+                        receiver:
+                          type: string
+                          example: sadat
+                        amount:
+                          type: integer
+                          example: 1
   /v1/get-chain:
     get:
       responses:
@@ -62,3 +63,42 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  chain:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                          example: 2
+                        timeStamp:
+                          type: string
+                          example: 24-04-2022 15:21:41
+                        proof:
+                          type: integer
+                          example: 38561
+                        previousHash:
+                          type: string
+                          example: b7f1f36decd1fcc72095e3912c20111ffc57634bfb5a959782244fbec12c07a0
+                        transactions:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              sender:
+                                type: string
+                                example: 2c320ba9dcec48a28b123d84ea819488
+                              receiver:
+                                type: string
+                                example: sadat
+                              amount:
+                                type: integer
+                                example: 1
+                  size:
+                    type: integer
+                    example: 1
+
+
+
+
