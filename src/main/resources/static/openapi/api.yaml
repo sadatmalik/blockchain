@@ -17,12 +17,15 @@ servers:
     description: Badger node
   - url: http://localhost:8082
     description: Pal node
+
 paths:
   /v1/mine-block:
     get:
+      summary: Mine a new block.
+      description: Mines a new block containing the required proof of work. Includes a single transaction representing the mined coin value issued to the miner.
       responses:
         '200':
-          description: Newly inserted block
+          description: New block
           content:
             application/json:
               schema:
@@ -56,6 +59,8 @@ paths:
                           example: 1
   /v1/get-chain:
     get:
+      summary: Requests the full blockchain.
+      description: Constructs and returns a data transfer object containing the full list of blocks in the blockchain and the current chain size.
       responses:
         '200':
           description: The block chain
