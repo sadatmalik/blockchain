@@ -19,7 +19,7 @@ contract scoin_ico {
     mapping(address => uint) equity_scoins;
     mapping(address => uint) equity_usd;
 
-    // Checking if an investor can by Scoins
+    // Checking if an investor can buy Scoins
     modifier can_buy_scoins(uint usd_invested) {
         require (usd_invested * usd_to_scoins + total_scoins_bought <= max_scoins);
         _;
